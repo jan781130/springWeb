@@ -54,9 +54,10 @@ public class ClubService {
 	}
 	
 	public static void main(String[] args){
+		Date date = new Date(System.currentTimeMillis());
 		ClubService s = new ClubService();
-		String club = s.findOne(3);
-		System.out.println(club);
+		s.save("姬八人","j8.jpg",date,150,1);
+        System.out.println("success");
 	}
 	
 }

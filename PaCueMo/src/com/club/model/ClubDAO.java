@@ -12,7 +12,7 @@ import _00_initial_Servise.GlobalService;
 
 public class ClubDAO implements ClubDAO_interface {
 
-	private static final String insert_state = "insert into club(clubName,clubImgURL,clubDate,clubHead,clubProp) values (?,?,?,?,?,?)";
+	private static final String insert_state = "insert into club(clubName,clubImgURL,clubDate,clubHead,clubProp) values (?,?,?,?,?)";
 	private static final String delete_state = "delete from club where clubID=?";
 	private static final String get_one_state = "select clubID,clubName,clubImgURL,clubDate,clubHead,clubProp from club where clubID=? ";
 	private static final String get_all = "select clubID,clubName,clubImgURL,clubDate,clubHead,clubProp from club order by clubID ";
@@ -31,10 +31,10 @@ public class ClubDAO implements ClubDAO_interface {
 			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(insert_state);
 			pstmt.setString(1, clubVO.getClubName());
-			pstmt.setString(3, clubVO.getClubImageName());
-			pstmt.setDate(4, clubVO.getClubDate());
-			pstmt.setInt(5, clubVO.getClubHead());
-			pstmt.setInt(6, clubVO.getClubProp());
+			pstmt.setString(2, clubVO.getClubImageName());
+			pstmt.setDate(3, clubVO.getClubDate());
+			pstmt.setInt(4, clubVO.getClubHead());
+			pstmt.setInt(5, clubVO.getClubProp());
 			pstmt.executeUpdate();
 			con.commit();
 			System.out.println("新增一筆資料");

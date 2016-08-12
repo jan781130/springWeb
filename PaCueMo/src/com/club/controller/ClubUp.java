@@ -1,6 +1,10 @@
 package com.club.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Path;
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -45,7 +49,6 @@ public class ClubUp extends HttpServlet {
 		
 		String clubName = null;
 		int clubHead = 0;
-		byte[] clubImage = null;
 		String clubImageName=null;
 		int clubProp = 0;
 		Date clubDate = new Date(System.currentTimeMillis());
@@ -73,7 +76,7 @@ public class ClubUp extends HttpServlet {
 			Iterator<FileItem> iters = items.iterator();
 			while (iters.hasNext()) {
 				FileItem fileItem = iters.next();
-				// form��Ƭ����`��r
+				// 
 				if (fileItem.isFormField()) {
 					String name = fileItem.getFieldName();
 					String value = fileItem.getString("UTF-8");
@@ -85,7 +88,7 @@ public class ClubUp extends HttpServlet {
 			    			return;
 			            }
 					}
-					// Ū�����ΦW��
+					// 
 					if ("clubName".equalsIgnoreCase(name)) {
 						if (value.length() > 10) {
 							errorMsg.add("檔案名稱太長");
@@ -96,7 +99,7 @@ public class ClubUp extends HttpServlet {
 						System.out.println(clubName);
 						
 					}
-					// Ū�����ιΪ�
+					// 
 					else if ("clubHead".equalsIgnoreCase(name)) {
 						try {
 							clubHead = new Integer(value);
@@ -105,7 +108,7 @@ public class ClubUp extends HttpServlet {
 						}
 
 					}
-					// Ū�����Ωʽ�
+					// 
 					else if ("clubProp".equalsIgnoreCase(name)) {
 						try {
 							clubProp = new Integer(value);
@@ -118,7 +121,7 @@ public class ClubUp extends HttpServlet {
 					else {
 						errorMsg.add("表格資料錯誤");
 					}
-					// Ū���Ϥ��ɮ�
+					// 
 				} else {
 					String fieldName = fileItem.getFieldName();
 					String contentType = fileItem.getContentType();
@@ -134,8 +137,10 @@ public class ClubUp extends HttpServlet {
 						if (sizeInBytes > 1024 * 1024 * 2) {
 							errorMsg.add("檔案太大");
 						}
-
-						clubImage = fileItem.get();
+                       String path = request.getContextPath()+"/image/club/"+clubImageName;
+						OutputStream output = new BufferedOutputStream(
+			                      new FileOutputStream(path));
+						output.write(fileItem.get()); 
 					} 
 					else {
 						errorMsg.add("表格輸入錯誤");
